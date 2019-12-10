@@ -111,8 +111,7 @@ class PRBot extends EventEmitter
   {
     console.log("room set to", data)
 
-    this.socket.subscribe(data.roomID);
-    this.chatChannel = this.socket.subscribe("chat_" + data.roomID);
+    this.chatChannel = this.socket.subscribe(data.roomID);
     this.chatChannel.watch((data) => this.handleChat(data));
     this.midiChannel = this.socket.subscribe("midi_" + data.roomID);
     this.midiChannel.watch((data) => this.handleMidi(data));
