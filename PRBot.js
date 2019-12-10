@@ -13,7 +13,7 @@ class PRBot extends EventEmitter
     this.serverTimeOffset = 0;
   }
 
-  connect(name, room)
+  connect(name, room="lobby")
   {
     this.socket = socketCluster.create({
       path: '/socketcluster/',
@@ -121,6 +121,11 @@ class PRBot extends EventEmitter
     setInterval(() => this.flushNoteBuffer(), 200);
   }
 
+  sendMessage(message)
+  {
+    this.socket.emit("chatMessage", message.toString()) //tostring so we dont send garbage to PR
+  }
+
   flushNoteBuffer()
   {
     if(this.noteBuffer.length == 0)
@@ -144,7 +149,24 @@ class PRBot extends EventEmitter
 
   handleChat(data)
   {
-    this.emit("message", data);
+    if(data.type != "chat")
+    {
+      return;
+    }
+
+    var message =
+    {
+      author:
+      {
+        name: data.name,
+        nickname: data.nickname,
+        id: data.id,
+        sID: data.sID,
+      },
+      content: data.message,
+    };
+
+    this.emit("message", message);
   }
 
   handleMidi(data)

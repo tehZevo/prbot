@@ -2,9 +2,16 @@ var PRBot = require("./PRBot.js");
 var U = require("./utils.js");
 
 var bot = new PRBot();
-bot.connect("Bot", "room");
+bot.connect("Bot", "lobby");
 
-bot.on("message", (data) => console.log(data))
+bot.on("message", (message) =>
+{
+  if(message.content == "ping")
+  {
+    bot.sendMessage("pong");
+  }
+});
+
 bot.on("note", (data) =>
 {
   if(data.socketID == bot.socketID)
