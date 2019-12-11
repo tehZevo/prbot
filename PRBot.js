@@ -171,6 +171,7 @@ class PRBot extends EventEmitter
 
   handleMidi(data)
   {
+    //TODO: wait for data.t? (date.now() - t) + d
     data.n.forEach((e) =>
     {
       //delay event by e.d
@@ -187,7 +188,7 @@ class PRBot extends EventEmitter
           stop: e.s,
           //TODO: src/kb_src/inst?
         });
-      }, e.d);
+      }, Date.now() - t + e.d);
     });
 
   }
