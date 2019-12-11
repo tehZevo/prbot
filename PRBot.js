@@ -188,7 +188,7 @@ class PRBot extends EventEmitter
           stop: e.s,
           //TODO: src/kb_src/inst?
         });
-      }, Date.now() - data.t + e.d);
+      }, data.t - Date.now() + e.d);
     });
 
   }
